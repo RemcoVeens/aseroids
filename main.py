@@ -22,10 +22,14 @@ def main():
     AsteroidField.containers = (updatable)
     Shot.containers = (updatable, drawable, shots)
 
+    score = 0
+
     x = constants.SCREEN_WIDTH // 2
     y = constants.SCREEN_HEIGHT // 2
     player = Player(x,y)
     AsteroidField()
+    pygame.font.init()
+    font = pygame.font.SysFont(pygame.font.get_default_font()[0], 32)
 
     while True:
         screen.fill(color="black")
@@ -38,11 +42,13 @@ def main():
                 if pew.coliding(stone):
                     stone.split()
                     pew.kill()
-
-
-
+                    score += 10
         for d in drawable:
             d.draw(screen)
+        # font = pygame.font.Font(None, 30)
+
+        score_text = font.render(f"Score: {score}", True, (255, 255, 255))
+        screen.blit(score_text, (10, 30))
         pygame.display.flip()
 
         for event in pygame.event.get():
